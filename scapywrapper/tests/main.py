@@ -30,4 +30,7 @@ if __name__ == "__main__":
     main_obj = MainClass()
     print(func_name + "got command line arguments:\n" + str(sys.argv))
     pcap_file_parser = main_obj.create_pcap_file_parser_for_pcap_file(sys.argv[1])
+    packet_num = 2
+    packet_data = pcap_file_parser.get_specific_packet(packet_num)
+
     print(func_name + "end")
