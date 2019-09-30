@@ -23,7 +23,6 @@ class MainClass(Loggable):
         return PcapFileParser(pcap_file)
 
 
-
 if __name__ == "__main__":
     func_name = "main - "
     print(func_name + "start")
