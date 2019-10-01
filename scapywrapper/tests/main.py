@@ -3,7 +3,7 @@ import sys
 
 from scapywrapper.utilities.loggable import Loggable
 from scapywrapper.pcapFileParser.pcapFileParser import PcapFileParser
-
+from scapywrapper.packetParser.igpPacketParser import IgpPacketParser
 
 class MainClass(Loggable):
 
@@ -22,6 +22,10 @@ class MainClass(Loggable):
 
         return PcapFileParser(pcap_file)
 
+    def get_packet_igp_protocol_type(self, packet_data):
+        igp_packet_parser = IgpPacketParser()
+        return igp_packet_parser.igp_packet_parser_get_packet_protocol_type(packet_data)
+
 
 if __name__ == "__main__":
     func_name = "main - "
@@ -29,7 +33,10 @@ if __name__ == "__main__":
     main_obj = MainClass()
     print(func_name + "got command line arguments:\n" + str(sys.argv))
     pcap_file_parser = main_obj.create_pcap_file_parser_for_pcap_file(sys.argv[1])
-    packet_num = 2
+    packet_num = int(sys.argv[2])
     packet_data = pcap_file_parser.get_specific_packet(packet_num)
+    packet_protocol_type = main_obj.get_packet_igp_protocol_type(packet_data)
+    if packet_protocol_type is not None:
+        print(func_name + "the packet is of type:" + packet_protocol_type)
 
     print(func_name + "end")
