@@ -25,17 +25,16 @@ class IgpPacketParser(Loggable, IgpPacketParserInterface):
             print(self.log_me() + "had an error extracting the packet")
             return None
 
-        if not ether_pkt.haslayer("Ethernet"):
-            print(self.log_me() + "the frame is not of ethernet type, ignoring it (not supported)")
-            return None
-
         '''
         print(self.log_me() + "the entire packet (frame) content received is:\n")
         ether_pkt.show()
-        for key,val in ether_pkt.fields.items():
+        for key, val in ether_pkt.fields.items():
             print(str(key) + ":" + str(val))
-        '''
 
+        if not ether_pkt.haslayer("Ethernet") or not ether_pkt.haslayer("802.3"):
+            print(self.log_me() + "the frame is not of ethernet type, ignoring it (not supported)")
+            return None
+        '''
         # first check the frame fo ISIS header (remember that ISIS does not rely on IP
         # so there is no point to "cast" the frame to an IP packet)
         isis_common_header = "ISIS Common Header"
